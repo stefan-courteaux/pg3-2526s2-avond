@@ -1,4 +1,5 @@
 using System;
+using ShipIt.Shared;
 
 namespace ShipIt.PriceQuote.Api.Contracts;
 

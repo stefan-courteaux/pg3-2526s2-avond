@@ -1,33 +1,30 @@
-using System;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using ShipIt.PriceQuote.Api.Contracts;
+using ShipIt.PriceQuote.Service;
 
 namespace ShipIt.PriceQuote.Api.Controllers;
 
 [ApiController]
 [Route("pricequotes")]
-public class PriceQuoteController : ControllerBase
+public class PriceQuoteController(IPriceQuoteService quoteService) : ControllerBase
 {
     [HttpPost]
-    public ActionResult<PriceQuoteResponseContract> CalculatePriceQuote([FromBody]PriceQuoteRequestContract priceQuoteRequest)
+    public async Task<ActionResult<PriceQuoteResponseContract>> CalculatePriceQuoteAsync([FromBody]PriceQuoteRequestContract priceQuoteRequest)
     {
-        if(priceQuoteRequest.FromCountry == CountryEnum.NL && priceQuoteRequest.WeightKg > 10)
+        try
         {
-            return Problem(title: "For shipments from the Netherlands, the maximum weight is 10 kg.", statusCode: StatusCodes.Status400BadRequest);
+            var created = await quoteService.CreateAsync(priceQuoteRequest);
+            return CreatedAtAction(nameof(GetByIdAsync), new {Id = created.Id}, created);
         }
-
-        var price = 2.5 + priceQuoteRequest.LengthCm * priceQuoteRequest.WidthCm * priceQuoteRequest.HeightCm * 0.0001 + priceQuoteRequest.WeightKg * 1.15;
-        if(priceQuoteRequest.FromCountry != priceQuoteRequest.ToCountry)
+        catch(PriceQuoteExceptionNLWeightExceeded e)
         {
-            price += 3.0;
+            return Problem(title: e.Message, statusCode: StatusCodes.Status400BadRequest);   
         }
+    }
 
-        return Ok(new PriceQuoteResponseContract
-        {
-            CreatedOn = DateTime.UtcNow,
-            ValidUntil = DateTime.UtcNow.AddHours(48),
-            Price = decimal.Round((decimal)price, 1)
-        });
+    [HttpGet("{id}")]
+    public async Task<ActionResult<PriceQuoteResponseContract>> GetByIdAsync([FromRoute]string Id)
+    {
+        return Ok(await quoteService.GetAsync(Id));
     }
 }

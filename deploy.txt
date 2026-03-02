@@ -1,0 +1,6 @@
+az webapp up \
+  --name hogent-pg3-stefanc-shipit-quote \
+  --plan hogent-pg3-stefanc-shipit-plan \
+  --resource-group hogent-pg3-stefanc-shipit \
+  --location canadacentral \
+  --os-type linux
