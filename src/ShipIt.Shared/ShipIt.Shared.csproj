@@ -6,8 +6,4 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="../ShipIt.Shared/ShipIt.Shared.csproj" />
-  </ItemGroup>
-
 </Project>
