@@ -1,0 +1,194 @@
+{
+  "info": {
+    "_postman_id": "31aea0a0-631a-41ac-8945-508dcb115b71",
+    "name": "2025-2026-s2-pg3",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "33190066"
+  },
+  "item": [
+    {
+      "name": "PriceQuotes",
+      "item": [
+        {
+          "name": "PriceQuote Create",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"widthCm\" : 10,\n    \"heightCm\" : 20,\n    \"lengthCm\" : 88,\n    \"weightKg\" : 9,\n    \"fromCountry\" : \"BE\",\n    \"toCountry\" : \"NL\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://localhost:7276/pricequotes",
+              "protocol": "https",
+              "host": [
+                "localhost"
+              ],
+              "port": "7276",
+              "path": [
+                "pricequotes"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "PriceQuote Read",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://localhost:7276/pricequotes/d7e837a8-93f0-43a3-8b62-bed4ec3656ec",
+              "protocol": "https",
+              "host": [
+                "localhost"
+              ],
+              "port": "7276",
+              "path": [
+                "pricequotes",
+                "d7e837a8-93f0-43a3-8b62-bed4ec3656ec"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "PriceQuote Create Azure",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"widthCm\" : 222,\n    \"heightCm\" : 20,\n    \"lengthCm\" : 30,\n    \"weightKg\" : 8,\n    \"fromCountry\" : \"NL\",\n    \"toCountry\" : \"BE\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://hogent-pg3-stefanc-shipit-quote.azurewebsites.net/pricequotes",
+              "protocol": "https",
+              "host": [
+                "hogent-pg3-stefanc-shipit-quote",
+                "azurewebsites",
+                "net"
+              ],
+              "path": [
+                "pricequotes"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "PriceQuote Read Azure",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://hogent-pg3-stefanc-shipit-quote.azurewebsites.net/pricequotes/cfcb6dea-a665-459e-b991-54fc4bd1be1f",
+              "protocol": "https",
+              "host": [
+                "hogent-pg3-stefanc-shipit-quote",
+                "azurewebsites",
+                "net"
+              ],
+              "path": [
+                "pricequotes",
+                "cfcb6dea-a665-459e-b991-54fc4bd1be1f"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Sandbox",
+      "item": [
+        {
+          "name": "Autocompletion FR",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://data.geopf.fr/geocodage/completion/?text=12, Rue de rivoli, Paris&type=StreetAddress&maximumResponses=3",
+              "protocol": "https",
+              "host": [
+                "data",
+                "geopf",
+                "fr"
+              ],
+              "path": [
+                "geocodage",
+                "completion",
+                ""
+              ],
+              "query": [
+                {
+                  "key": "text",
+                  "value": "12, Rue de rivoli, Paris"
+                },
+                {
+                  "key": "terr",
+                  "value": "{terr}",
+                  "disabled": true
+                },
+                {
+                  "key": "poiType",
+                  "value": "{poiType}",
+                  "disabled": true
+                },
+                {
+                  "key": "lonlat",
+                  "value": "{lonlat}",
+                  "disabled": true
+                },
+                {
+                  "key": "type",
+                  "value": "StreetAddress"
+                },
+                {
+                  "key": "maximumResponses",
+                  "value": "3"
+                },
+                {
+                  "key": "bbox",
+                  "value": "{bbox}",
+                  "description": "Bounding Box",
+                  "disabled": true
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Weather Template Demo",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://localhost:7276/WeatherForecast",
+              "protocol": "https",
+              "host": [
+                "localhost"
+              ],
+              "port": "7276",
+              "path": [
+                "WeatherForecast"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}
