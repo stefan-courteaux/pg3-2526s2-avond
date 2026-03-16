@@ -1,5 +1,8 @@
+using System.Text.Json.Serialization;
+
 namespace ShipIt.Shared;
 
+[JsonConverter(typeof(JsonStringEnumConverter))]
 public enum CountryEnum
 {
     BE = 0,
