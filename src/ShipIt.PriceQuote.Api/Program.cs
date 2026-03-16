@@ -1,6 +1,8 @@
 using System.Text.Json.Serialization;
 using System.Threading.RateLimiting;
 using Microsoft.AspNetCore.RateLimiting;
+using Microsoft.OpenApi;
+using Scalar.AspNetCore;
 using ShipIt.PriceQuote.Service;
 using ShipIt.PriceQuote.Storage;
 
@@ -32,6 +34,21 @@ builder.Services.AddControllers().AddJsonOptions(opt =>
 builder.Services.AddScoped<IPriceQuoteRepository, PriceQuoteRepository>();
 builder.Services.AddScoped<IPriceQuoteService, PriceQuoteService>();
 
+builder.Services.AddOpenApi(options =>
+{
+    options.AddDocumentTransformer((document, context, cancellationToken) =>
+    {
+        // Contact zoals in Demo Microsoft
+        document.Info.Contact = new OpenApiContact
+        {
+            Name = "ShipIt Support",
+            Email = "support@shipit.com"
+        };
+        // Description aanpassen
+        document.Info.Description = "Via deze api kan je prijzen bereken en uitlezen...";
+        return Task.CompletedTask;
+    });
+});
 var app = builder.Build();
 
 app.MapControllers();
@@ -41,5 +58,8 @@ if (app.Environment.IsDevelopment())
     app.UseExceptionHandler("/error-development");
 else
     app.UseExceptionHandler("/error");
+
+app.MapOpenApi();
+app.MapScalarApiReference();
 
 app.Run();
