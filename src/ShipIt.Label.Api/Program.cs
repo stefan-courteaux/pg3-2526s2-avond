@@ -1,5 +1,7 @@
+using System.Threading.RateLimiting;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 using QuestPDF.Infrastructure;
 using ShipIt.Label.Api.Contracts;
 using ShipIt.Label.Domain;
@@ -17,9 +19,20 @@ builder.Services.AddHttpClient();
 builder.Services.AddScoped<IDomainController, DomainController>();
 builder.Services.AddScoped<ILabelRepository, LabelRepository>();
 
+builder.Services.AddRateLimiter(_ => _
+    .AddFixedWindowLimiter(policyName: "label-read-limiter", options =>
+    {
+        options.PermitLimit = 1;
+        options.Window = TimeSpan.FromSeconds(15);
+        options.QueueProcessingOrder = QueueProcessingOrder.OldestFirst;
+        options.QueueLimit = 0;
+    }));
+
 QuestPDF.Settings.License = LicenseType.Community;
 
 var app = builder.Build();
+
+app.UseRateLimiter();
 
 app.MapGet("/", () => "Hello World!");
 
@@ -76,6 +89,7 @@ async Task<Results<Ok<string>, BadRequest, FileContentHttpResult>> (
 
     return TypedResults.BadRequest();
 
-}).WithName("GetLabel");
+}).WithName("GetLabel")
+.RequireRateLimiting("label-read-limiter");
 
 app.Run();
