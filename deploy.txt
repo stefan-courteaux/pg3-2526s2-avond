@@ -11,3 +11,9 @@ az webapp up \
   --resource-group hogent-pg3-stefanc-shipit \
   --location canadacentral \
   --os-type linux
+
+
+
+dotnet ef migrations add InitAspNetUsers -c ApplicationDbContext -o Data/Migrations/AspNetUsers
+
+dotnet ef migrations add InitAppClients -c ConfigurationDbContext -o Data/Migrations/AppClients/ConfigurationDb

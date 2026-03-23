@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RateLimiting;
 using ShipIt.PriceQuote.Api.Contracts;
@@ -6,6 +7,7 @@ using ShipIt.PriceQuote.Service;
 namespace ShipIt.PriceQuote.Api.Controllers;
 
 [ApiController]
+[Authorize]
 [Route("pricequotes")]
 public class PriceQuoteController(IPriceQuoteService quoteService) : ControllerBase
 {

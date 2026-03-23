@@ -25,6 +25,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShipIt.Label.Domain.DTO", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShipIt.Label.Api", "ShipIt.Label.Api\ShipIt.Label.Api.csproj", "{DF2DB615-A591-430E-9F9B-53F9CDEBD70C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShipIt.IdentityServer", "ShipIt.IdentityServer\ShipIt.IdentityServer.csproj", "{EE1DB193-2381-47AC-A08C-9A3B0607F121}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -167,6 +169,18 @@ Global
 		{DF2DB615-A591-430E-9F9B-53F9CDEBD70C}.Release|x64.Build.0 = Release|Any CPU
 		{DF2DB615-A591-430E-9F9B-53F9CDEBD70C}.Release|x86.ActiveCfg = Release|Any CPU
 		{DF2DB615-A591-430E-9F9B-53F9CDEBD70C}.Release|x86.Build.0 = Release|Any CPU
+		{EE1DB193-2381-47AC-A08C-9A3B0607F121}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE1DB193-2381-47AC-A08C-9A3B0607F121}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EE1DB193-2381-47AC-A08C-9A3B0607F121}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{EE1DB193-2381-47AC-A08C-9A3B0607F121}.Debug|x64.Build.0 = Debug|Any CPU
+		{EE1DB193-2381-47AC-A08C-9A3B0607F121}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{EE1DB193-2381-47AC-A08C-9A3B0607F121}.Debug|x86.Build.0 = Debug|Any CPU
+		{EE1DB193-2381-47AC-A08C-9A3B0607F121}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EE1DB193-2381-47AC-A08C-9A3B0607F121}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EE1DB193-2381-47AC-A08C-9A3B0607F121}.Release|x64.ActiveCfg = Release|Any CPU
+		{EE1DB193-2381-47AC-A08C-9A3B0607F121}.Release|x64.Build.0 = Release|Any CPU
+		{EE1DB193-2381-47AC-A08C-9A3B0607F121}.Release|x86.ActiveCfg = Release|Any CPU
+		{EE1DB193-2381-47AC-A08C-9A3B0607F121}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
