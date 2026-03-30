@@ -1,16 +1,17 @@
 ﻿using Duende.IdentityServer;
 using Duende.IdentityServer.Models;
+using IdentityModel;
 
 namespace ShipIt.IdentityServer;
 
 public static class Config
 {
     public static IEnumerable<IdentityResource> IdentityResources =>
-        new IdentityResource[]
-        {
+        [
             new IdentityResources.OpenId(),
             new IdentityResources.Profile(),
-        };
+            new IdentityResource("roles", [ JwtClaimTypes.Role])
+        ];
 
     public static IEnumerable<ApiScope> ApiScopes =>
         new ApiScope[]
@@ -51,6 +52,7 @@ public static class Config
                 AllowedScopes = {
                     IdentityServerConstants.StandardScopes.OpenId,
                     IdentityServerConstants.StandardScopes.Profile,
+                    "roles",
                     "shipit.pricequotes.api.read"
                 },
                 RedirectUris = { "http://localhost:5173/" },
