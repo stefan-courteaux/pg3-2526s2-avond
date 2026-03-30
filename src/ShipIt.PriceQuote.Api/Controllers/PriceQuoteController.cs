@@ -13,6 +13,7 @@ public class PriceQuoteController(IPriceQuoteService quoteService) : ControllerB
 {
     [HttpPost]
     [EnableRateLimiting("quote-creation-limiter")]
+    [Authorize(Policy = "QuoteWritePolicy")]
     public async Task<ActionResult<PriceQuoteResponseContract>> CalculatePriceQuoteAsync([FromBody] PriceQuoteRequestContract priceQuoteRequest)
     {
         try
@@ -27,6 +28,7 @@ public class PriceQuoteController(IPriceQuoteService quoteService) : ControllerB
     }
 
     [HttpGet("{id}")]
+    [Authorize(Policy = "QuoteReadPolicy")]
     public async Task<ActionResult<PriceQuoteResponseContract>> GetByIdAsync([FromRoute] string Id)
     {
         return Ok(await quoteService.GetAsync(Id));

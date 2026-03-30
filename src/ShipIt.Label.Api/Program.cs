@@ -1,4 +1,5 @@
 using System.Threading.RateLimiting;
+using Duende.IdentityModel.Client;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RateLimiting;
@@ -44,13 +45,32 @@ app.MapPost("labels", async Task<CreatedAtRoute<string>> (
 {
     // get price op basis van quoteId
     var httpClient = httpClientFactory.CreateClient();
-    httpClient.BaseAddress = new Uri(config["QuoteApiBaseUrl"]);
 
-    var priceQuote = await httpClient.GetFromJsonAsync<PriceQuoteResponseContract>($"pricequotes/{requestContract.QuoteId}");
+    //TODO move to config
+    var isUrl = "https://localhost:5001";
+    var disco = await httpClient.GetDiscoveryDocumentAsync(isUrl);
 
-    // could validate
+    // Get token
+    var tokenResponse = await httpClient
+        .RequestClientCredentialsTokenAsync(
+            new ClientCredentialsTokenRequest
+            {
+                Address = disco.TokenEndpoint,
+                ClientId = "label-client",
+                ClientSecret = "eenGrootLabelGeheim",
+                Scope = "shipit.pricequotes.api.read"
+            });
+
+    // Set token (before calling pricequote api)
+    httpClient.SetBearerToken(tokenResponse.AccessToken ?? throw new Exception("Could not obtain token."));
+
+    // Call pricequote api
+    var fullQuoteEndpoint = new Uri($"{config["QuoteApiBaseUrl"] ?? throw new Exception("QuoteApiBaseUrl is unknown")}/pricequotes/{requestContract.QuoteId}");
+    var priceQuote = await httpClient.GetFromJsonAsync<PriceQuoteResponseContract>(fullQuoteEndpoint) ?? throw new Exception("PriceQuote response is null. Cannot continue.");
+
+    // could validate response
     // - is price quote still valid?
-    // - does recipient country match price quote country?
+    // - does recipient country match price quote country? etc...
 
     // label maken
     var dto = new LabelCreationDTO

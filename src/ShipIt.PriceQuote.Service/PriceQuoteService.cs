@@ -27,14 +27,14 @@ public class PriceQuoteService(IPriceQuoteRepository priceQuoteRepository) : IPr
         };
 
         // Business Logic
-        if(model.PriceArguments.FromCountry == CountryEnum.NL && model.PriceArguments.WeightKg > 10)
+        if (model.PriceArguments.FromCountry == CountryEnum.NL && model.PriceArguments.WeightKg > 10)
         {
             throw new PriceQuoteExceptionNLWeightExceeded(
                 $"For shipments from NL, the maximum weight is 10kg. You submitted {model.PriceArguments.WeightKg}");
         }
 
         var price = 2.5 + model.PriceArguments.LengthCm * model.PriceArguments.WidthCm * model.PriceArguments.HeightCm * 0.0001 + model.PriceArguments.WeightKg * 1.15;
-        if(model.PriceArguments.FromCountry != model.PriceArguments.ToCountry)
+        if (model.PriceArguments.FromCountry != model.PriceArguments.ToCountry)
         {
             price += 3.0;
         }
@@ -43,7 +43,7 @@ public class PriceQuoteService(IPriceQuoteRepository priceQuoteRepository) : IPr
         {
             Price = decimal.Round((decimal)price, 1),
             CreatedOn = DateTime.UtcNow,
-            ValidUntil = DateTime.UtcNow.AddHours(48)       
+            ValidUntil = DateTime.UtcNow.AddHours(48)
         };
 
         // Stel u voor: nog meer logica enzo op model
@@ -74,7 +74,8 @@ public class PriceQuoteService(IPriceQuoteRepository priceQuoteRepository) : IPr
             Id = created.id,
             CreatedOn = created.createdOn,
             ValidUntil = created.validUntil,
-            Price = created.price
+            Price = created.price,
+            CountryFrom = created.fromCountry
         };
 
         return responseContract;
