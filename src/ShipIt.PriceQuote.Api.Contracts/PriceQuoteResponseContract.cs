@@ -1,4 +1,6 @@
-﻿namespace ShipIt.PriceQuote.Api.Contracts;
+﻿using ShipIt.Shared;
+
+namespace ShipIt.PriceQuote.Api.Contracts;
 
 public class PriceQuoteResponseContract
 {
@@ -6,4 +8,5 @@ public class PriceQuoteResponseContract
     public DateTime CreatedOn { get; set; }
     public DateTime ValidUntil { get; set; }
     public decimal Price { get; set; }
+    public CountryEnum CountryFrom { get; set; }
 }
