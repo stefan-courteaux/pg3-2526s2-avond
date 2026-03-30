@@ -1,5 +1,7 @@
+using Microsoft.AspNetCore.Authorization;
 using Scalar.AspNetCore;
 using ShipIt.PriceQuote.Api;
+using ShipIt.PriceQuote.Api.Auth;
 using ShipIt.PriceQuote.Storage;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,6 +12,8 @@ builder.Services.Configure<PriceQuoteRepositoryOptions>(
     )
 );
 
+builder.Services.AddSingleton<IAuthorizationHandler, ShipItAuthHandler>();
+
 builder.Services.AddAuthentication()
     .AddJwtBearer(options =>
     {
@@ -19,11 +23,8 @@ builder.Services.AddAuthentication()
 
 builder.Services.AddAuthorizationBuilder()
     .AddPolicy("QuoteReadPolicy", policy =>
-        {
-            policy.RequireAuthenticatedUser();
-            policy.RequireClaim("scope",
-                "shipit.pricequotes.api.read");
-        })
+        policy.Requirements.Add(
+            new ShipItRequirement("shipit.pricequotes.api.read", "Quoter")))
     .AddPolicy("QuoteWritePolicy", policy =>
         {
             policy.RequireAuthenticatedUser();

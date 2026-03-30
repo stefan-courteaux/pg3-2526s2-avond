@@ -19,4 +19,8 @@
     <ProjectReference Include="../ShipIt.Shared/ShipIt.Shared.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Auth/" />
+  </ItemGroup>
+
 </Project>
