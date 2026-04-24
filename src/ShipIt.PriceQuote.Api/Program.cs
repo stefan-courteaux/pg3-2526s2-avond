@@ -17,7 +17,7 @@ builder.Services.AddSingleton<IAuthorizationHandler, ShipItAuthHandler>();
 builder.Services.AddAuthentication()
     .AddJwtBearer(options =>
     {
-        options.Authority = "https://localhost:5001";
+        options.Authority = builder.Configuration["IdentityAuthority"];
         options.TokenValidationParameters.ValidateAudience = false;
     });
 
@@ -43,7 +43,7 @@ builder.Services.AddCors(options =>
         policy =>
         {
             policy.WithOrigins("http://localhost:5173")
-            .AllowAnyHeader()
+            .AllowAnyHeader()        
             .AllowAnyMethod();
         });
 });

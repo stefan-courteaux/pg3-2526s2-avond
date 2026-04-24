@@ -55,9 +55,9 @@ public static class Config
                     "roles",
                     "shipit.pricequotes.api.read"
                 },
-                RedirectUris = { "http://localhost:5173/" },
-                PostLogoutRedirectUris = { "http://localhost:5173/" },
-                AllowedCorsOrigins = ["http://localhost:5173"],
+                RedirectUris = { "http://localhost:5173/", "https://hogentpg3stefancshipit.z9.web.core.windows.net/" },
+                PostLogoutRedirectUris = { "http://localhost:5173/", "https://hogentpg3stefancshipit.z9.web.core.windows.net/" },
+                AllowedCorsOrigins = ["http://localhost:5173", "https://hogentpg3stefancshipit.z9.web.core.windows.net"],
             }
         };
 }

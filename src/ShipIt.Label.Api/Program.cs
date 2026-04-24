@@ -46,8 +46,7 @@ app.MapPost("labels", async Task<CreatedAtRoute<string>> (
     // get price op basis van quoteId
     var httpClient = httpClientFactory.CreateClient();
 
-    //TODO move to config
-    var isUrl = "https://localhost:5001";
+    var isUrl = config["IdentityAuthority"];
     var disco = await httpClient.GetDiscoveryDocumentAsync(isUrl);
 
     // Get token
