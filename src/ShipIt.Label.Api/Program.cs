@@ -71,6 +71,28 @@ app.MapPost("labels", async Task<CreatedAtRoute<string>> (
     // - is price quote still valid?
     // - does recipient country match price quote country? etc...
 
+    // Validate FR Address - Alles in een minimal api endpoint proppen is misschien beetje quick-n-dirty?
+    if(requestContract.RecipientCountry == "FR")
+    {
+        // Een set van url query parameters als Key Value
+        var query = new Dictionary<string, string>
+        {
+            { "q", requestContract.RecipientAddressLine1
+                + " " + requestContract.RecipientAddressLine2 },
+            { "limit", "1"}
+        };
+        // Url encoding van speciale karakters
+        var queryString = await new FormUrlEncodedContent(query).ReadAsStringAsync();
+        // Url string validatie
+        var frUri = new Uri($"{config["FRApiBaseUrl"]}?{queryString}");
+
+        var addressResponse = await httpClient
+            .GetFromJsonAsync<OpenDataAddressResponseContract>(frUri);
+
+        if(addressResponse is null || addressResponse.Features[0].Properties.Score < 0.6)
+            throw new ArgumentException("Adres lijkt nergens op");
+    }
+
     // label maken
     var dto = new LabelCreationDTO
     {
